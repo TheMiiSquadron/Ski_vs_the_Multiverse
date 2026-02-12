@@ -6,21 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ski vs. the Multiverse</title>
     <style>
+        @font-face {
+            font-family: 'Conthrax';
+            src: url('img/conthrax.otf') format('opentype');
+        }
         body {
             text-align: center;
-            background: url('img/frieren-fern.gif') no-repeat center center fixed;
+            background: url('img/pages_bg.png') no-repeat center center fixed;
             background-size: cover;
             color: white;
         }
         p {
             font-size: 24px;
-        }        a {
-            color: red;
+        }
+        .nav-links {
+            font-family: 'Conthrax', sans-serif;
+        }
+        a {
+            color: white;
             padding: 5px 10px;
             text-decoration: none;
         }
         a:visited {
-            color: red;
+            color: white;
         }
         a:hover {
             opacity: 0.8;
@@ -38,19 +46,127 @@
             border: none;
             border-radius: 8px;
         }
+        .audio-player {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            width: min(420px, calc(100vw - 32px));
+            z-index: 1000;
+        }
+        .now-playing {
+            margin: 0 0 6px;
+            font-size: clamp(11px, 2vw, 14px);
+            color: rgba(255, 255, 255, 0.92);
+            text-align: left;
+            font-family: 'Conthrax', sans-serif;
+            white-space: nowrap;
+        }
+        
+         
+        .song-title {
+            color: #C560FF;
+            }
+        
+        .mix-title {
+            /* Easy Mix */
+            /* color: #FFFFFF;  */
+
+            /* Ski Mix */
+            /* color: #2FCBFB;  */
+
+            /* Manifest Mix */
+            color: #a80000;
+        }
+        .audio-player audio {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <img width="20%" height="auto" src="img/ski_mv_logo.png" alt="Ski vs. the Multiverse logo">
     <div>
-        <p>  
-            <a href="https://drive.google.com/drive/u/0/folders/1f2vb2xTKqE3F2omhAfcLLgEeNR-SxEd0">FLP Downloads</a>  
-            <a href="videos.html">YouTube Videos</a>
-            <a href="downloads.html">Mod & Pack Downloads (Coming soon!)</a>
+        <p class="nav-links">  
+            <a class="comic" href="https://drive.google.com/drive/u/0/folders/1f2vb2xTKqE3F2omhAfcLLgEeNR-SxEd0">FLPs</a>  
+            <a class="comic" href="videos.html">Videos</a>
+            <a class="comic" href="downloads.html">Downloads (Coming soon!)</a>
         </p>
     </div>
     <div class="video-container">
+        <!-- Ski vs. the Multiverse - Vs. Sonic.EXE - Chaos (Ski Mix) -->
         <iframe src="https://www.youtube.com/embed/RE74CU32Tn8" allowfullscreen></iframe>
     </div>
+    <div class="audio-player">
+        <p class="now-playing">Now Playing: <span class="song-title"></span> <span class="mix-title"></span></p>
+        <audio id="bg-music" controls autoplay loop preload="auto">
+            <source src="img/Inst.ogg" type="audio/ogg">
+        </audio>
+    </div>
+    <script>
+        (function () {
+            const audio = document.getElementById('bg-music');
+            const volumeKey = 'ski_bg_music_volume';
+            const timeKey = 'ski_bg_music_time';
+            const songTitleKey = 'ski_bg_music_song_title';
+            const mixTitleKey = 'ski_bg_music_mix_title';
+            
+            // NOW PLAYING: SONG TITLE & MIX TITLE
+            const nowPlayingSongTitle = 'Triple Trouble';
+            const nowPlayingMixTitle = '(Manifest Mix)';
+            
+
+            const songTitleEl = document.querySelector('.song-title');
+            const mixTitleEl = document.querySelector('.mix-title');
+
+            if (songTitleEl) {
+                songTitleEl.textContent = nowPlayingSongTitle;
+            }
+            if (mixTitleEl) {
+                mixTitleEl.textContent = nowPlayingMixTitle;
+            }
+            try {
+                localStorage.setItem(songTitleKey, nowPlayingSongTitle);
+                localStorage.setItem(mixTitleKey, nowPlayingMixTitle);
+            } catch (_) {}
+            if (songTitleEl || mixTitleEl) {
+                try {
+                    localStorage.setItem('ski_bg_music_title', nowPlayingSongTitle + ' ' + nowPlayingMixTitle);
+                } catch (_) {}
+            }
+
+            try {
+                const savedVolume = parseFloat(localStorage.getItem(volumeKey));
+                if (Number.isFinite(savedVolume)) {
+                    audio.volume = Math.max(0, Math.min(1, savedVolume));
+                } else {
+                    audio.volume = 0.5;
+                }
+            } catch (_) {
+                audio.volume = 0.5;
+            }
+
+            audio.addEventListener('loadedmetadata', function () {
+                try {
+                    const savedTime = parseFloat(localStorage.getItem(timeKey));
+                    if (Number.isFinite(savedTime) && savedTime >= 0 && savedTime < audio.duration) {
+                        audio.currentTime = savedTime;
+                    }
+                } catch (_) {}
+            });
+
+            audio.addEventListener('volumechange', function () {
+                try {
+                    localStorage.setItem(volumeKey, String(audio.volume));
+                } catch (_) {}
+            });
+
+            setInterval(function () {
+                try {
+                    if (!audio.paused) {
+                        localStorage.setItem(timeKey, String(audio.currentTime));
+                    }
+                } catch (_) {}
+            }, 1000);
+        })();
+    </script>
 </body>
 </html>
