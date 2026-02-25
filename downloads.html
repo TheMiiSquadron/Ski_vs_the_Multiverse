@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="img/SkiFavicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ski vs. The Multiverse - Downloads</title>
+        <link rel="stylesheet" href="img/style.css">
+</head>
+<body class="page-downloads">
+    <div id="site-content">
+    <h1>Downloads</h1>
+    <div class="downloads-group">
+        <h2>Mod Download - Quick Links</h2>
+        <div class="zip-list">
+            <div class="zip-item">
+                <a href="https://drive.google.com/drive/u/0/folders/1LEs06X6TO83DkLJ5M_GfWk0ifQ3XhJ-Y" download>Main Build</a>
+                <p>Main game release. Version 1.0</p>
+            </div>
+            <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Friday Night Funkin'</a>
+                <p>Friday Night Funkin' Universe</p>
+            </div>
+            <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Vs. Sonic.EXE</a>
+                <p>Sonic.EXE Universe</p>
+            </div>
+            <!-- <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Vs. Tricky</a>
+                <p>Mod Pack A for Ski vs. The Multiverse</p>
+            </div>
+            <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Seek's Cool Deltarune Mod</a>
+                <p>Mod Pack A for Ski vs. The Multiverse</p>
+            </div>
+            <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Vs. Hex (Weekend Update)</a>
+                <p>Mod Pack A for Ski vs. The Multiverse</p>
+            </div>
+            <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Hotline 024</a>
+                <p>Mod Pack A for Ski vs. The Multiverse</p>
+            </div>
+            <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Vs. Whitty</a>
+                <p>Mod Pack A for Ski vs. The Multiverse</p>
+            </div>
+            <div class="zip-item">
+                <a href="downloads/SkiMods_PackA.zip" download>Friday Night Funkin': Doki Doki Takeover</a>
+                <p>Mod Pack A for Ski vs. The Multiverse</p>
+            </div> -->
+            
+            <!-- Add more .zip items here as needed -->
+        </div>
+    </div>
+    <p><a class="back-home" href="index.html">&#8592; Back to Home</a></p>
+    <div class="audio-player">
+        <p class="now-playing">Now Playing: <span class="song-title"></span> <span class="mix-title"></span></p>
+        <audio id="bg-music" controls autoplay loop preload="auto">
+            <source src="img/Skilestial.mp3" type="audio/wav">
+        </audio>
+    </div>
+    </div>
+    <script src="img/Unlock Timer.js"></script>
+    <script>
+        (function () {
+            const audio = document.getElementById('bg-music');
+            const volumeKey = 'ski_bg_music_volume';
+            const timeKey = 'ski_bg_music_time';
+            const songTitleKey = 'ski_bg_music_song_title';
+            const mixTitleKey = 'ski_bg_music_mix_title';
+            const fallbackSongTitle = 'Skilestial';
+            const fallbackMixTitle = '(Title Theme)'; 
+            const songTitleEl = document.querySelector('.song-title');
+            const mixTitleEl = document.querySelector('.mix-title');
+
+            let syncedSongTitle = fallbackSongTitle;
+            let syncedMixTitle = fallbackMixTitle;
+            if (songTitleEl) {
+                songTitleEl.textContent = syncedSongTitle;
+            }
+            if (mixTitleEl) {
+                mixTitleEl.textContent = syncedMixTitle;
+            }
+            try {
+                localStorage.setItem(songTitleKey, syncedSongTitle);
+                localStorage.setItem(mixTitleKey, syncedMixTitle);
+                localStorage.setItem('ski_bg_music_title', (syncedSongTitle + ' ' + syncedMixTitle).trim());
+            } catch (_) {}
+
+            try {
+                const savedVolume = parseFloat(localStorage.getItem(volumeKey));
+                if (Number.isFinite(savedVolume)) {
+                    audio.volume = Math.max(0, Math.min(1, savedVolume));
+                } else {
+                    audio.volume = 0.5;
+                }
+            } catch (_) {
+                audio.volume = 0.5;
+            }
+
+            audio.addEventListener('loadedmetadata', function () {
+                try {
+                    const savedTime = parseFloat(localStorage.getItem(timeKey));
+                    if (Number.isFinite(savedTime) && savedTime >= 0 && savedTime < audio.duration) {
+                        audio.currentTime = savedTime;
+                    }
+                } catch (_) {}
+            });
+
+            audio.addEventListener('volumechange', function () {
+                try {
+                    localStorage.setItem(volumeKey, String(audio.volume));
+                } catch (_) {}
+            });
+
+            setInterval(function () {
+                try {
+                    if (!audio.paused) {
+                        localStorage.setItem(timeKey, String(audio.currentTime));
+                    }
+                } catch (_) {}
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="icon" type="image/x-icon" href="img/SkiFavicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ski vs. the Multiverse - Videos</title>
+        <link rel="stylesheet" href="img/style.css">
+</head>
+<body class="page-videos">
+    <h1>Check out our videos!</h1>
+    <div class="playlist">
+        <h2>Main Trailer</h2>
+        <iframe src="https://www.youtube.com/embed/CEutsQ2Ns4A" allowfullscreen></iframe>
+    </div>
+    <div class="playlist">
+        <h2>Friday Night Funkin'</h2>
+        <div class="video-grid">
+            <iframe class="video-thumb" src="https://www.youtube.com/embed/zNiFHrY6FSI" allowfullscreen></iframe>
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+            <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <div class="playlist">
+        <h2>Vs. Sonic.EXE</h2>
+        <div class="video-grid">
+            <iframe class="video-thumb" src="https://www.youtube.com/embed/RE74CU32Tn8" allowfullscreen></iframe>
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+            <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <div class="playlist">
+        <h2><!--Vs. Tricky-->???</h2>
+        <div class="video-grid">
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+            <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <div class="playlist">
+        <h2><!--Seek's Cool Deltarune Mod-->???</h2>
+        <div class="video-grid">
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+             <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <div class="playlist">
+        <h2><!--Vs. Hex (Weekend Update)-->???</h2>
+        <div class="video-grid">
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+            <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <div class="playlist">
+        <h2><!--Hotline 024-->???</h2>
+        <div class="video-grid">
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+            <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <div class="playlist">
+        <h2><!--Vs. Whitty-->???</h2>
+        <div class="video-grid">
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+            <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <div class="playlist">
+        <h2><!--Friday Night Funkin': Doki Doki Takeover-->???</h2>
+        <div class="video-grid">
+            <!-- <iframe class="video-thumb" src="Insert YouTube Link Here" allowfullscreen></iframe> -->
+            <!-- Add more <iframe> blocks here for additional videos -->
+        </div>
+    </div>
+    <p><a class="back-home" href="index.html">&#8592; Back to Home</a></p>
+    <div class="audio-player">
+        <p class="now-playing">Now Playing: <span class="song-title"></span> <span class="mix-title"></span></p>
+        <audio id="bg-music" controls autoplay loop preload="auto">
+            <source src="img/Skilestial.mp3" type="audio/wav">
+        </audio>
+    </div>
+    <script>
+        (function () {
+            const audio = document.getElementById('bg-music');
+            const volumeKey = 'ski_bg_music_volume';
+            const timeKey = 'ski_bg_music_time';
+            const songTitleKey = 'ski_bg_music_song_title';
+            const mixTitleKey = 'ski_bg_music_mix_title';
+            const fallbackSongTitle = 'Skilestial';
+            const fallbackMixTitle = '(Title Theme)'; 
+            const songTitleEl = document.querySelector('.song-title');
+            const mixTitleEl = document.querySelector('.mix-title');
+
+            let syncedSongTitle = fallbackSongTitle;
+            let syncedMixTitle = fallbackMixTitle;
+            if (songTitleEl) {
+                songTitleEl.textContent = syncedSongTitle;
+            }
+            if (mixTitleEl) {
+                mixTitleEl.textContent = syncedMixTitle;
+            }
+            try {
+                localStorage.setItem(songTitleKey, syncedSongTitle);
+                localStorage.setItem(mixTitleKey, syncedMixTitle);
+                localStorage.setItem('ski_bg_music_title', (syncedSongTitle + ' ' + syncedMixTitle).trim());
+            } catch (_) {}
+
+            try {
+                const savedVolume = parseFloat(localStorage.getItem(volumeKey));
+                if (Number.isFinite(savedVolume)) {
+                    audio.volume = Math.max(0, Math.min(1, savedVolume));
+                } else {
+                    audio.volume = 0.5;
+                }
+            } catch (_) {
+                audio.volume = 0.5;
+            }
+
+            audio.addEventListener('loadedmetadata', function () {
+                try {
+                    const savedTime = parseFloat(localStorage.getItem(timeKey));
+                    if (Number.isFinite(savedTime) && savedTime >= 0 && savedTime < audio.duration) {
+                        audio.currentTime = savedTime;
+                    }
+                } catch (_) {}
+            });
+
+            audio.addEventListener('volumechange', function () {
+                try {
+                    localStorage.setItem(volumeKey, String(audio.volume));
+                } catch (_) {}
+            });
+
+            setInterval(function () {
+                try {
+                    if (!audio.paused) {
+                        localStorage.setItem(timeKey, String(audio.currentTime));
+                    }
+                } catch (_) {}
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>
+
+
+
+
