@@ -11,12 +11,14 @@
     <meta property="og:title" content="Ski vs. the Multiverse">
     <meta property="og:description" content="Check out the latest Ski vs. the Multiverse videos, music, and updates.">
     <meta property="og:url" content="https://themiisquadron.github.io/Ski_vs_the_Multiverse/">
-    <meta property="og:image" content="https://themiisquadron.github.io/Ski_vs_the_Multiverse/img/ski_mv_logo.png">
-    <meta property="og:image:alt" content="Ski vs. the Multiverse logo">
+    <meta property="og:image" content="https://themiisquadron.github.io/Ski_vs_the_Multiverse/img/ski_mv_embed.png">
+    <meta property="og:image:alt" content="Ski vs. the Multiverse logo on a starry multiverse background">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Ski vs. the Multiverse">
     <meta name="twitter:description" content="Check out the latest Ski vs. the Multiverse videos, music, and updates.">
-    <meta name="twitter:image" content="https://themiisquadron.github.io/Ski_vs_the_Multiverse/img/ski_mv_logo.png">
+    <meta name="twitter:image" content="https://themiisquadron.github.io/Ski_vs_the_Multiverse/img/ski_mv_embed.png">
     <link rel="canonical" href="https://themiisquadron.github.io/Ski_vs_the_Multiverse/">
         <link rel="stylesheet" href="img/style.css">
 </head>
@@ -26,12 +28,11 @@
             <h1 class="gate-title">&#128274;ACCESS RESTRICTED&#128274;</h1>
             <p class="gate-subtitle">Unlocks on: <span id="unlock-date"></span></p>
             <p id="countdown" class="countdown">00d 00h 00m 00s</p>
-            <button id="bypass-timer-btn" type="button">Enter Password to Bypass Timer</button>
+            <button id="bypass-timer-btn" type="button">Enter Password:</button>
             <div id="timer-password-modal" class="timer-password-modal" aria-hidden="true">
                 <div class="timer-password-card">
-                    <p class="timer-password-title">Timer Bypass</p>
-                    <form id="timer-password-form">
-                        <label class="timer-password-label" for="timer-password-input">Password</label>
+                    <p class="timer-password-title">Enter Dev Password:</p>
+                    <form id="timer-password-form"> 
                         <input id="timer-password-input" class="timer-password-input" type="password" autocomplete="off">
                         <p id="timer-password-error" class="timer-password-error" role="alert"></p>
                         <div class="timer-password-actions">
@@ -51,7 +52,7 @@
             <p class="nav-links">  
                 <a class="comic" href="https://drive.google.com/drive/u/0/folders/1f2vb2xTKqE3F2omhAfcLLgEeNR-SxEd0">FLPs</a>  
                 <a class="comic" href="videos.html">Videos</a>
-                <a class="comic" id="downloads-link" href="downloads.html">&#128274; Downloads &#128274;</a>
+                <a class="comic" href="downloads.html">Downloads</a>
             </p>
         </div>
         <div class="video-container">
@@ -134,20 +135,9 @@
                     }
                 } catch (_) {}
             }, 1000);
-
-            const downloadsLink = document.getElementById('downloads-link');
-            if (downloadsLink) {
-                downloadsLink.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    window.alert('This tab is not finished yet.');
-                });
-            }
-
         })();
     </script>
 </body>
 </html>
-
-
 
 
